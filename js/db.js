@@ -2,7 +2,8 @@ db.collection("platillos").onSnapshot((datos) => {
     datos.docChanges().forEach((registro) => {
 if (registro.type === "added") {
         mostrarPlatillo(registro.doc.data(), registro.doc.id);
-        actualizalista();
+      
+  
 }
 
 if (registro.type === "modified"){
@@ -17,8 +18,8 @@ formularioAgregar.addEventListener("submit", (e) => {
 e.preventDefault();
 const platilloNuevo = {
     nombre: formularioAgregar.title.value,
-    ingredientes:formularioAgregar.ingredientes.value,
-    precio: formularioAgregar.price.value
+    ingredientes:formularioAgregar.Ingredientes.value,
+    precio: formularioAgregar.Precio.value
 
 }
 db.collection("platillos").add(platilloNuevo)
