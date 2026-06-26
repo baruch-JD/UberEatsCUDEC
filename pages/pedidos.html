@@ -28,6 +28,8 @@
     <li><a href="/" class="waves-effect">Home</a></li>
     <li><a href="/pages/about.html" class="waves-effect">About</a></li>
     <li><div class="divider"></div></li>
+     <li><a href="/pages/pedidos.html" class="waves-effect">pedidos</a></li>
+    <li><div class="divider"></div></li>
     <li><a href="/pages/contact.html" class="waves-effect">
       <i class="material-icons">mail_outline</i>Contact</a>
     </li>
@@ -35,10 +37,16 @@
 
   <!-- content -->
   <div class="container grey-text">
-    
+    <form>
+      <select id="listaplatillos"></select>
+    </form>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
+ </script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
+ </script>
 
-  <script src="/js/db.js"></script>
+  <script src="/js/firebase.js"></script>
   <script src="/js/pedidos.js"></script>
   
 </body>
