@@ -1,96 +1,196 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>REATS</title>
-  <!-- materialize icons, css & js -->
-  <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" href="/css/styles.css" rel="stylesheet">
-  
-  <script type="text/javascript" src="/js/materialize.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>REATS</title>
+
+    <link rel="icon" href="/favicon.ico">
+
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="/css/materialize.min.css">
+
+    <!-- Iconos -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Materialize JS -->
+    <script src="/js/materialize.min.js"></script>
+
 </head>
+
 <body class="grey lighten-4">
 
-  <!-- Menu superior -->
-  <nav class="z-depth-0">
-    <div class="nav-wrapper container">
-      <a href="/">REATS</span></a>
-      <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
-      </span>
+    <!-- Barra superior -->
+    <nav class="z-depth-0">
+
+        <div class="nav-wrapper container">
+
+            <a href="/">REATS</a>
+
+            <span class="right grey-text text-darken-1">
+
+                <i class="material-icons sidenav-trigger" data-target="side-menu">
+                    menu
+                </i>
+
+            </span>
+
+        </div>
+
+    </nav>
+
+    <!-- Menú lateral -->
+    <ul id="side-menu" class="sidenav side-menu">
+
+        <li>
+            <a class="subheader">REATS</a>
+        </li>
+
+        <li>
+            <a href="/" class="waves-effect">Inicio</a>
+        </li>
+
+        <li>
+            <a href="/pages/pedidos.html" class="waves-effect">
+                Pedidos
+            </a>
+        </li>
+
+        <li>
+            <a href="/pages/about.html" class="waves-effect">
+                Acerca de
+            </a>
+        </li>
+
+        <li>
+            <div class="divider"></div>
+        </li>
+
+        <li>
+            <a href="/pages/contact.html" class="waves-effect">
+
+                <i class="material-icons">
+                    mail_outline
+                </i>
+
+                Contacto
+
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- Lista de platillos -->
+    <div class="recipes container grey-text text-darken-1">
+
     </div>
-  </nav>
 
-  <!-- Menu lateral -->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader">REATS</a></li>
-    <li><a href="/" class="waves-effect">Inicio</a></li>
-    <li><a href="/pages/pedidos.html" class="waves-effect">pedidos</a></li>
-    
-    <li><a href="/pages/about.html" class="waves-effect">Acerca</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="/pages/contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contacto</a>
-    </li>
-  </ul>
+    <!-- Botón flotante -->
 
-  <!-- Lista de platillos -->
-  <div class="recipes container grey-text text-darken-1">
-    
-  </div>
+    <div class="center">
 
-  <div class="center">
-    <a class="btn-floating btn-small btn-large add-btn sidenav-trigger" data-target="side-form">
-      <i class="material-icons">add</i>
-    </a>
-  </div>
+        <a class="btn-floating btn-large add-btn sidenav-trigger"
+            data-target="side-form">
 
-  <!-- Agregar platillo -->
-  <div id="side-form" class="sidenav side-form">
-    <form class="add-recipe container section">
-      <h6 >Nuevo platillo</h6>
-      <div class="divider"></div>
-      <div class="input-field">
-        <input placeholder="ejemplo: Pizza" id="title" type="text" class="validate">
-        <label for="title">Nombre</label>
-      </div>
-      <div class="input-field">
-        <input placeholder="e.g. Tofu, mushroom, garlic" id="Ingredientes" type="text" class="validate">
-        <label for="ingredients">Ingredientes</label>
-      </div>
-       <div class="input-field">
-        <input placeholder="e.g. Tofu, mushroom, garlic" id="Precio" type="text" class="validate">
-        <label for="Precio">Precio</label>
-      </div>
-      <div class="input-field center">
-        <button id="btnAgregarPlatillo" class="btn-small">Agregar</button>
-      </div>
-    </form>
-  </div>
-<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
- </script>
-  
+            <i class="material-icons">
+                add
+            </i>
 
-  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
- </script>
+        </a>
 
+    </div>
 
-<script>
+    <!-- Formulario -->
 
+    <div id="side-form" class="sidenav side-form">
 
-</script>
- <script src="/js/firebase.js"></script>
-  <script src="/js/index.js"></script>
-  <script src="/js/db.js"></script>
+        <form class="add-recipe container section">
+
+            <h5>Nuevo Platillo</h5>
+
+            <div class="divider"></div>
+
+            <br>
+
+            <div class="input-field">
+
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    required>
+
+                <label for="title">
+                    Nombre
+                </label>
+
+            </div>
+
+            <div class="input-field">
+
+                <input
+                    id="Ingredientes"
+                    name="Ingredientes"
+                    type="text"
+                    required>
+
+                <label for="Ingredientes">
+                    Ingredientes
+                </label>
+
+            </div>
+
+            <div class="input-field">
+
+                <input
+                    id="Precio"
+                    name="Precio"
+                    type="number"
+                    required>
+
+                <label for="Precio">
+                    Precio
+                </label>
+
+            </div>
+
+            <div class="input-field center">
+
+                <button
+                    id="btnAgregarPlatillo"
+                    type="submit"
+                    class="btn">
+
+                    Agregar Platillo
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+        <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
+
+    <!-- Configuración de Firebase -->
+    <script src="/js/firebase.js"></script>
+
+    <!-- Funciones de la interfaz -->
+    <script src="/js/index.js"></script>
+
+    <!-- Base de datos -->
+    <script src="/js/db.js"></script>
 
 </body>
+
 </html>
-
- 
-  
-
-
-
-

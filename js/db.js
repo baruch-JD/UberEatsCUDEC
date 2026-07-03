@@ -1,35 +1,55 @@
-db.collection("platillos").onSnapshot((datos) => {
-    datos.docChanges().forEach((registro) => {
-if (registro.type === "added") {
-        mostrarPlatillo(registro.doc.data(), registro.doc.id);
-      
-  
-}
+db.collection("platillos").onSnapshot((snapshot) => {
 
-if (registro.type === "modified"){
-        actualizarPlatillo(registro.doc.data(), registro.doc.id);
-}
-    }
-);
+    snapshot.docChanges().forEach((registro) => {
+
+        if (registro.type === "added") {
+            mostrarPlatillo(registro.doc.data(), registro.doc.id);
+        }
+
+        if (registro.type === "modified") {
+            actualizarPlatillo(registro.doc.data(), registro.doc.id);
+        }
+
+    });
+
+}, (error) => {
+    console.error(error);
+    alert(error.message);
 });
 
+
 const formularioAgregar = document.querySelector("form");
+
 formularioAgregar.addEventListener("submit", (e) => {
-e.preventDefault();
-const platilloNuevo = {
-    nombre: formularioAgregar.title.value,
-    ingredientes:formularioAgregar.Ingredientes.value,
-    precio: formularioAgregar.Precio.value
 
-}
-db.collection("platillos").add(platilloNuevo)
-.catch((error) =>{
-    console.log(error);
-    alert("Error al agregar platillo");
-})
+    e.preventDefault();
 
-formularioAgregar.title.value = "";
-formularioAgregar.ingredientes.value = "";
-formularioAgregar.precio.value = "";
-alert("Platillo Agregado");
+    const platilloNuevo = {
+
+        nombre: document.getElementById("title").value,
+        ingredientes: document.getElementById("Ingredientes").value,
+        precio: document.getElementById("Precio").value
+
+    };
+
+    db.collection("platillos")
+        .add(platilloNuevo)
+        .then(() => {
+
+            document.getElementById("title").value = "";
+            document.getElementById("Ingredientes").value = "";
+            document.getElementById("Precio").value = "";
+
+            M.Sidenav.getInstance(document.getElementById("side-form")).close();
+
+            alert("Platillo agregado");
+
+        })
+        .catch((error) => {
+
+            console.log(error);
+            alert("Error al agregar el platillo");
+
+        });
+
 });
