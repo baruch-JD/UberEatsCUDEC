@@ -1,22 +1,34 @@
-db.collection("platillos").onSnapshot((snapshot) => {
+db.collection("platillos").onSnapshot((snapshot)=>{
 
-    snapshot.docChanges().forEach((registro) => {
+    snapshot.docChanges().forEach((registro)=>{
 
-        if (registro.type === "added") {
-            mostrarPlatillo(registro.doc.data(), registro.doc.id);
+        if(registro.type==="added"){
+
+            mostrarPlatillo(registro.doc.data(),registro.doc.id);
+
         }
 
-        if (registro.type === "modified") {
-            actualizarPlatillo(registro.doc.data(), registro.doc.id);
+        if(registro.type==="modified"){
+
+            actualizarPlatillo(registro.doc.data(),registro.doc.id);
+
+        }
+
+        if(registro.type==="removed"){
+
+            let tarjeta = document.getElementById(registro.doc.id);
+
+            if(tarjeta){
+
+                tarjeta.remove();
+
+            }
+
         }
 
     });
 
-}, (error) => {
-    console.error(error);
-    alert(error.message);
 });
-
 
 const formularioAgregar = document.querySelector("form");
 

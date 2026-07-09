@@ -103,20 +103,52 @@ formulario.addEventListener("reset", function(){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(exito, error);
     } else {
-        alert("Tu dispositivo no tiene capacidad para obtener la ubi.");
+        alert("Tu dispositivo no soporta geolocalización.");
     }
 });
 
 function exito(posicion) {
-   let latitud = posicion.coords.latitude;
-   let longitud = posicion.coords.longitude;
-   fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`),{
-   headers:{
-    'user-agent'; 'UberEatsbaruch (baruchdduarte@gmail.com)'
-   }
-})
 
-   .then(respuesta => respuesta.json())
-   .then(data => alert(data.display_name))
-   .catch(error => console.error(error));
+    let latitud = posicion.coords.latitude;
+    let longitud = posicion.coords.longitude;
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`, {
+        headers: {
+            "User-Agent": "UberEatsbaruch (barjadu02@gmail.com)"
+        }
+    })
+    .then(respuesta => respuesta.json())
+    .then(data => {
+
+        // Dirección completa
+        document.getElementById("direccion").value = data.display_name;
+
+        // para campo de ubi un campo de ubicación
+        if (document.getElementById("ubicacion")) {
+
+            let ciudad =
+                data.address.city ||
+                data.address.town ||
+                data.address.village ||
+                data.address.municipality ||
+                data.address.county ||
+                "";
+
+            let estado = data.address.state || "";
+            let pais = data.address.country || "";
+
+            document.getElementById("ubicacion").value = `${ciudad}, ${estado}, ${pais}`;
+        }
+
+    })
+    .catch(error => {
+        console.log(error);
+        alert("No se pudo obtener la dirección.");
+    });
+
+}
+
+function error(err) {
+    alert("No se pudo obtener la ubicación.\n\n" + err.message);
+
 }

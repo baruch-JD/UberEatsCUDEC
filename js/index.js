@@ -59,3 +59,29 @@ function actualizarPlatillo(platillo, id) {
     tarjeta.querySelector(".recipe-price").innerHTML = "$" + platillo.precio;
 
 }
+// Eliminar platillo
+document.querySelector(".recipes").addEventListener("click", function(e){
+
+    if(e.target.classList.contains("material-icons")){
+
+        const id = e.target.getAttribute("data-id");
+
+        db.collection("platillos").doc(id).delete()
+        .then(function(){
+
+            document.getElementById(id).remove();
+
+            alert("Platillo eliminado");
+
+        })
+        .catch(function(error){
+
+            console.log(error);
+
+            alert("Error al eliminar");
+
+        });
+
+    }
+
+});
