@@ -4,9 +4,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     M.Sidenav.init(menus, { edge: "right" });
 
+    // ==========================
+    // INICIALIZAR MAPA
+    // ==========================
+    mapa = L.map("mapa").setView([19.4326, -99.1332], 13);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap"
+    }).addTo(mapa);
+
+    marcador = L.marker([19.4326, -99.1332]).addTo(mapa);
+
 });
 
 let contenidolista = "";
+
+let mapa;
+let marcador;
+
 
 // Cargar platillos
 db.collection("platillos").onSnapshot((snapshot) => {
@@ -97,20 +112,32 @@ formulario.addEventListener("reset", function(){
 
     },100);
 
- 
-});
-  document.getElementById("btnUbicacion").addEventListener("click", function () {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(exito, error);
-    } else {
-        alert("Tu dispositivo no soporta geolocalización.");
-    }
 });
 
+
+document.getElementById("btnUbicacion").addEventListener("click", function () {
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(exito, error);
+
+    } else {
+
+        alert("Tu dispositivo no soporta geolocalización.");
+
+    }
+
+});
 function exito(posicion) {
 
     let latitud = posicion.coords.latitude;
     let longitud = posicion.coords.longitude;
+
+    // Mover el mapa a la ubicación actual
+    mapa.setView([latitud, longitud], 17);
+
+    // Mover el marcador
+    marcador.setLatLng([latitud, longitud]);
 
     fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`, {
         headers: {
@@ -123,7 +150,13 @@ function exito(posicion) {
         // Dirección completa
         document.getElementById("direccion").value = data.display_name;
 
-        // para campo de ubi un campo de ubicación
+        // Actualizar el label de Materialize
+        M.updateTextFields();
+
+        // Mostrar dirección en el marcador
+        marcador.bindPopup(data.display_name).openPopup();
+
+        // Si existe el campo ubicación
         if (document.getElementById("ubicacion")) {
 
             let ciudad =
@@ -137,18 +170,25 @@ function exito(posicion) {
             let estado = data.address.state || "";
             let pais = data.address.country || "";
 
-            document.getElementById("ubicacion").value = `${ciudad}, ${estado}, ${pais}`;
+            document.getElementById("ubicacion").value =
+                `${ciudad}, ${estado}, ${pais}`;
+
+            M.updateTextFields();
         }
 
     })
     .catch(error => {
+
         console.log(error);
+
         alert("No se pudo obtener la dirección.");
+
     });
 
 }
 
 function error(err) {
+
     alert("No se pudo obtener la ubicación.\n\n" + err.message);
 
 }
