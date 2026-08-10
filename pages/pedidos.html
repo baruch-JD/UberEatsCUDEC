@@ -1,425 +1,293 @@
-```html
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<title>REATS - Pedidos</title>
 
-    <meta
-        http-equiv="X-UA-Compatible"
-        content="ie=edge">
+<!-- Materialize -->
+<link rel="stylesheet" href="../css/materialize.min.css">
 
-    <title>REATS - Pedidos</title>
+<!-- Material Icons -->
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+<!-- Estilos -->
+<link rel="stylesheet" href="../css/styles.css">
 
-    <!-- =====================================
-         MATERIALIZE CSS
-    ====================================== -->
+<!-- Leaflet -->
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin="">
 
-    <link
-        rel="stylesheet"
-        href="../css/materialize.min.css">
-
-
-    <!-- =====================================
-         ICONOS
-    ====================================== -->
-
-    <link
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet">
-
-
-    <!-- =====================================
-         ESTILOS
-    ====================================== -->
-
-    <link
-        rel="stylesheet"
-        href="../css/styles.css">
-
-
-    <!-- =====================================
-         LEAFLET CSS
-    ====================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        crossorigin="">
-
-
-    <!-- =====================================
-         ESTILOS DEL MAPA
-    ====================================== -->
-
-    <style>
-
-        #mapa {
-            width: 100%;
-            height: 300px;
-            min-height: 300px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            display: block;
-            z-index: 1;
-        }
-
-    </style>
+<style>
+    #mapa {
+        width: 100%;
+        height: 300px;
+        min-height: 300px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        display: block;
+        z-index: 1;
+    }
+</style>
+```
 
 </head>
 
-
 <body>
 
+```
+<!-- BARRA SUPERIOR -->
 
-    <!-- =====================================
-         BARRA SUPERIOR
-    ====================================== -->
+<nav class="z-depth-0">
 
-    <nav class="z-depth-0">
+    <div class="nav-wrapper container">
 
-        <div class="nav-wrapper container">
+        <a href="../index.html">
+            REATS
+        </a>
 
-            <a href="../">
+        <span class="right grey-text text-darken-1">
 
-                REATS
+            <i class="material-icons sidenav-trigger"
+               data-target="side-menu">
+                menu
+            </i>
 
-            </a>
+        </span>
 
+    </div>
 
-            <span class="right grey-text text-darken-1">
+</nav>
 
-                <i
-                    class="material-icons sidenav-trigger"
-                    data-target="side-menu">
 
-                    menu
+<!-- MENÚ -->
 
-                </i>
+<ul id="side-menu"
+    class="sidenav side-menu">
 
-            </span>
+    <li>
+        <a class="subheader">
+            REATS
+        </a>
+    </li>
 
-        </div>
+    <li>
+        <a href="../index.html"
+           class="waves-effect">
 
-    </nav>
+            <i class="material-icons left">
+                home
+            </i>
 
+            Inicio
 
-    <!-- =====================================
-         MENÚ LATERAL
-    ====================================== -->
+        </a>
+    </li>
 
-    <ul
-        id="side-menu"
-        class="sidenav side-menu">
+    <li>
+        <a href="pedidos.html"
+           class="waves-effect">
 
-        <li>
+            <i class="material-icons left">
+                receipt
+            </i>
 
-            <a class="subheader">
+            Pedidos
 
-                REATS
+        </a>
+    </li>
 
-            </a>
+    <li>
+        <a href="about.html"
+           class="waves-effect">
 
-        </li>
+            <i class="material-icons left">
+                info
+            </i>
 
+            Acerca de
 
-        <li>
+        </a>
+    </li>
 
-            <a
-                href="../index.html"
-                class="waves-effect">
+    <li>
+        <div class="divider"></div>
+    </li>
 
-                <i class="material-icons left">
-                    home
-                </i>
+    <li>
+        <a href="contact.html"
+           class="waves-effect">
 
-                Inicio
+            <i class="material-icons left">
+                mail_outline
+            </i>
 
-            </a>
+            Contacto
 
-        </li>
+        </a>
+    </li>
 
+</ul>
 
-        <li>
 
-            <a
-                href="pedidos.html"
-                class="waves-effect">
+<!-- CONTENIDO -->
 
-                <i class="material-icons left">
-                    receipt
-                </i>
+<main class="container section">
 
-                Pedidos
+    <h5>
+        Seleccione un platillo
+    </h5>
 
-            </a>
 
-        </li>
+    <!-- PLATILLO -->
 
+    <div class="input-field">
 
-        <li>
+        <select id="platillo">
 
-            <a
-                href="about.html"
-                class="waves-effect">
-
-                <i class="material-icons left">
-                    info
-                </i>
-
-                Acerca de
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <div class="divider"></div>
-
-        </li>
-
-
-        <li>
-
-            <a
-                href="contact.html"
-                class="waves-effect">
-
-                <i class="material-icons left">
-                    mail_outline
-                </i>
-
-                Contacto
-
-            </a>
-
-        </li>
-
-    </ul>
-
-
-    <!-- =====================================
-         CONTENIDO
-    ====================================== -->
-
-    <main class="container section">
-
-
-        <h5>
-
-            Seleccione un platillo
-
-        </h5>
-
-
-        <!-- =====================================
-             SELECTOR DE PLATILLO
-        ====================================== -->
-
-        <div class="input-field">
-
-            <select id="platillo">
-
-                <option
-                    value=""
+            <option value=""
                     disabled
                     selected>
 
-                    Seleccione un platillo
+                Seleccione un platillo
 
-                </option>
+            </option>
 
-            </select>
+        </select>
 
-            <label>
-                Platillo
-            </label>
+        <label>
+            Platillo
+        </label>
 
-        </div>
-
-
-        <!-- =====================================
-             NOMBRE DEL CLIENTE
-        ====================================== -->
-
-        <div class="input-field">
-
-            <input
-                id="nombreCliente"
-                name="nombreCliente"
-                type="text"
-                required>
-
-            <label for="nombreCliente">
-
-                Nombre del cliente
-
-            </label>
-
-        </div>
+    </div>
 
 
-        <!-- =====================================
-             DIRECCIÓN
-        ====================================== -->
+    <!-- NOMBRE -->
 
-        <div class="input-field">
+    <div class="input-field">
 
-            <input
-                id="direccion"
-                name="direccion"
-                type="text"
-                required>
+        <input id="nombreCliente"
+               name="nombreCliente"
+               type="text">
 
-            <label for="direccion">
+        <label for="nombreCliente">
+            Nombre del cliente
+        </label>
 
-                Dirección
-
-            </label>
-
-        </div>
+    </div>
 
 
-        <!-- =====================================
-             BOTÓN UBICACIÓN
-        ====================================== -->
+    <!-- DIRECCIÓN -->
 
-        <div class="center">
+    <div class="input-field">
 
-            <button
-                type="button"
+        <input id="direccion"
+               name="direccion"
+               type="text">
+
+        <label for="direccion">
+            Dirección
+        </label>
+
+    </div>
+
+
+    <!-- UBICACIÓN -->
+
+    <div class="center">
+
+        <button type="button"
                 id="btnUbicacion"
                 class="btn waves-effect waves-light">
 
-                <i class="material-icons left">
-                    location_on
-                </i>
+            <i class="material-icons left">
+                location_on
+            </i>
 
-                Obtener ubicación
+            Obtener ubicación
 
-            </button>
+        </button>
 
-        </div>
-
-
-        <!-- =====================================
-             MAPA
-        ====================================== -->
-
-        <div id="mapa"></div>
+    </div>
 
 
-        <br>
+    <!-- MAPA -->
+
+    <div id="mapa"></div>
 
 
-        <!-- =====================================
-             BOTONES
-        ====================================== -->
+    <br>
 
-        <div class="center">
 
-            <button
-                type="button"
+    <!-- BOTONES -->
+
+    <div class="center">
+
+        <button type="button"
                 id="guardarPedido"
                 class="btn green waves-effect waves-light">
 
-                <i class="material-icons left">
-                    save
-                </i>
+            <i class="material-icons left">
+                save
+            </i>
 
-                Guardar
+            Guardar
 
-            </button>
+        </button>
 
 
-            <button
-                type="button"
+        <button type="button"
                 id="cancelarPedido"
                 class="btn red waves-effect waves-light">
 
-                <i class="material-icons left">
-                    cancel
-                </i>
+            <i class="material-icons left">
+                cancel
+            </i>
 
-                Cancelar
+            Cancelar
 
-            </button>
+        </button>
 
-        </div>
+    </div>
 
-
-    </main>
-
-
-    <!-- =====================================
-         MATERIALIZE JS
-    ====================================== -->
-
-    <script
-        src="../js/materialize.min.js">
-    </script>
+</main>
 
 
-    <!-- =====================================
-         LEAFLET JS
-    ====================================== -->
+<!-- ==============================
+     SCRIPTS
+=============================== -->
 
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-    </script>
+<!-- Materialize -->
+<script src="../js/materialize.min.js"></script>
 
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        crossorigin="">
+</script>
 
-    <!-- =====================================
-         FIREBASE
-    ====================================== -->
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
 
-    <script
-        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
-    </script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
+<!-- Firebase configuración -->
+<script src="../js/firebase.js"></script>
 
-    <script
-        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
-    </script>
+<!-- Base de datos -->
+<script src="../js/db.js"></script>
 
-
-    <!-- =====================================
-         CONFIGURACIÓN FIREBASE
-    ====================================== -->
-
-    <script
-        src="../js/firebase.js">
-    </script>
-
-
-    <!-- =====================================
-         BASE DE DATOS
-    ====================================== -->
-
-    <script
-        src="../js/db.js">
-    </script>
-
-
-    <!-- =====================================
-         PEDIDOS
-    ====================================== -->
-
-    <script
-        src="../js/pedidos.js">
-    </script>
-
+<!-- Pedidos -->
+<script src="../js/pedidos.js"></script>
+```
 
 </body>
 
 </html>
-```

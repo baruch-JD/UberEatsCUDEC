@@ -1,286 +1,288 @@
-```javascript
 let mapa = null;
 let marcador = null;
 
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    // =====================================
-    // MENÚ LATERAL
-    // =====================================
+```
+console.log("pedidos.js cargado");
 
-    const menu = document.querySelectorAll(".sidenav");
 
-    if (menu.length > 0) {
+// =====================================
+// MENÚ LATERAL
+// =====================================
 
-        M.Sidenav.init(menu, {
-            edge: "right"
+const menu = document.querySelectorAll(".sidenav");
+
+if (typeof M !== "undefined" && menu.length > 0) {
+
+    M.Sidenav.init(menu, {
+        edge: "right"
+    });
+
+}
+
+
+// =====================================
+// SELECTOR DE PLATILLOS
+// =====================================
+
+const selector = document.getElementById("platillo");
+
+if (selector && typeof db !== "undefined") {
+
+    db.collection("platillos").onSnapshot(function (snapshot) {
+
+        selector.innerHTML = "";
+
+        const inicial = document.createElement("option");
+
+        inicial.value = "";
+        inicial.disabled = true;
+        inicial.selected = true;
+        inicial.textContent = "Seleccione un platillo";
+
+        selector.appendChild(inicial);
+
+
+        snapshot.forEach(function (doc) {
+
+            const datos = doc.data();
+
+            if (datos.nombre) {
+
+                const opcion = document.createElement("option");
+
+                opcion.value = datos.nombre;
+                opcion.textContent = datos.nombre;
+
+                selector.appendChild(opcion);
+
+            }
+
         });
 
-    }
+
+        if (typeof M !== "undefined") {
+
+            M.FormSelect.init(
+                document.querySelectorAll("select")
+            );
+
+        }
+
+    }, function (error) {
+
+        console.error(
+            "Error cargando platillos:",
+            error
+        );
+
+    });
+
+}
 
 
-    // =====================================
-    // SELECTOR DE PLATILLOS
-    // =====================================
+// =====================================
+// MAPA
+// =====================================
 
-    const selector =
-        document.getElementById("platillo");
-
-
-    if (selector && typeof db !== "undefined") {
-
-        db.collection("platillos").onSnapshot(
-
-            function (snapshot) {
-
-                selector.innerHTML = "";
-
-                const inicial =
-                    document.createElement("option");
-
-                inicial.value = "";
-                inicial.disabled = true;
-                inicial.selected = true;
-                inicial.textContent =
-                    "Seleccione un platillo";
-
-                selector.appendChild(inicial);
+const elementoMapa = document.getElementById("mapa");
 
 
-                snapshot.forEach(function (doc) {
+if (elementoMapa && typeof L !== "undefined") {
 
-                    const datos = doc.data();
-
-
-                    if (datos.nombre) {
-
-                        const opcion =
-                            document.createElement("option");
-
-                        opcion.value =
-                            datos.nombre;
-
-                        opcion.textContent =
-                            datos.nombre;
-
-                        selector.appendChild(opcion);
-
-                    }
-
-                });
+    console.log("Inicializando mapa");
 
 
-                M.FormSelect.init(
-                    document.querySelectorAll("select")
+    mapa = L.map("mapa").setView(
+        [19.4326, -99.1332],
+        13
+    );
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution:
+                "&copy; OpenStreetMap contributors",
+            maxZoom: 19
+        }
+    ).addTo(mapa);
+
+
+    marcador = L.marker(
+        [19.4326, -99.1332]
+    ).addTo(mapa);
+
+
+    setTimeout(function () {
+
+        mapa.invalidateSize();
+
+    }, 500);
+
+} else {
+
+    console.error(
+        "No se pudo inicializar Leaflet o el mapa."
+    );
+
+}
+
+
+// =====================================
+// OBTENER UBICACIÓN
+// =====================================
+
+const botonUbicacion =
+    document.getElementById("btnUbicacion");
+
+
+if (botonUbicacion) {
+
+    botonUbicacion.addEventListener(
+        "click",
+        function () {
+
+            if (!navigator.geolocation) {
+
+                alert(
+                    "Tu dispositivo no soporta geolocalización."
                 );
 
-            },
-
-            function (error) {
-
-                console.error(
-                    "Error cargando platillos:",
-                    error
-                );
+                return;
 
             }
 
-        );
 
-    }
+            navigator.geolocation.getCurrentPosition(
+                ubicacionCorrecta,
+                ubicacionError
+            );
 
+        }
+    );
 
-    // =====================================
-    // MAPA
-    // =====================================
-
-    const elementoMapa =
-        document.getElementById("mapa");
-
-
-    if (
-        elementoMapa &&
-        typeof L !== "undefined"
-    ) {
-
-        mapa = L.map("mapa").setView(
-            [19.4326, -99.1332],
-            13
-        );
+}
 
 
-        L.tileLayer(
-            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            {
-                attribution:
-                    "&copy; OpenStreetMap contributors",
-                maxZoom: 19
+// =====================================
+// GUARDAR PEDIDO
+// =====================================
+
+const guardar =
+    document.getElementById("guardarPedido");
+
+
+if (guardar) {
+
+    guardar.addEventListener(
+        "click",
+        function () {
+
+
+            const platillo =
+                document.getElementById(
+                    "platillo"
+                ).value;
+
+
+            const nombre =
+                document.getElementById(
+                    "nombreCliente"
+                ).value.trim();
+
+
+            const direccion =
+                document.getElementById(
+                    "direccion"
+                ).value.trim();
+
+
+            if (!platillo) {
+
+                alert(
+                    "Seleccione un platillo."
+                );
+
+                return;
+
             }
-        ).addTo(mapa);
 
 
-        marcador = L.marker(
-            [19.4326, -99.1332]
-        ).addTo(mapa);
+            if (!nombre) {
+
+                alert(
+                    "Escriba el nombre del cliente."
+                );
+
+                return;
+
+            }
 
 
-        // IMPORTANTE:
-        // Le decimos a Leaflet que vuelva
-        // a calcular el tamaño del mapa.
+            if (!direccion) {
 
-        setTimeout(function () {
+                alert(
+                    "Escriba la dirección."
+                );
 
-            mapa.invalidateSize();
+                return;
 
-        }, 300);
-
-    }
+            }
 
 
-    // =====================================
-    // OBTENER UBICACIÓN
-    // =====================================
+            if (typeof db === "undefined") {
 
-    const botonUbicacion =
-        document.getElementById(
-            "btnUbicacion"
-        );
+                alert(
+                    "La base de datos no está disponible."
+                );
+
+                return;
+
+            }
 
 
-    if (botonUbicacion) {
+            const pedido = {
 
-        botonUbicacion.addEventListener(
-            "click",
-            function () {
+                platillo: platillo,
 
-                if (!navigator.geolocation) {
+                nombre: nombre,
+
+                direccion: direccion,
+
+                fecha:
+                    firebase.firestore.Timestamp.now()
+
+            };
+
+
+            db.collection("pedidos")
+                .add(pedido)
+
+                .then(function () {
 
                     alert(
-                        "Tu dispositivo no soporta geolocalización."
+                        "Pedido guardado correctamente."
                     );
 
-                    return;
 
-                }
-
-
-                navigator.geolocation.getCurrentPosition(
-                    ubicacionCorrecta,
-                    ubicacionError
-                );
-
-            }
-        );
-
-    }
-
-
-    // =====================================
-    // GUARDAR PEDIDO
-    // =====================================
-
-    const guardar =
-        document.getElementById(
-            "guardarPedido"
-        );
-
-
-    if (guardar) {
-
-        guardar.addEventListener(
-            "click",
-            function () {
-
-                const platillo =
-                    document.getElementById(
-                        "platillo"
-                    ).value;
-
-
-                const nombre =
                     document.getElementById(
                         "nombreCliente"
-                    ).value.trim();
+                    ).value = "";
 
 
-                const direccion =
                     document.getElementById(
                         "direccion"
-                    ).value.trim();
+                    ).value = "";
 
 
-                if (!platillo) {
-
-                    alert(
-                        "Seleccione un platillo."
-                    );
-
-                    return;
-
-                }
+                    document.getElementById(
+                        "platillo"
+                    ).selectedIndex = 0;
 
 
-                if (!nombre) {
-
-                    alert(
-                        "Escriba el nombre del cliente."
-                    );
-
-                    return;
-
-                }
-
-
-                if (!direccion) {
-
-                    alert(
-                        "Escriba la dirección."
-                    );
-
-                    return;
-
-                }
-
-
-                const pedido = {
-
-                    platillo: platillo,
-
-                    nombre: nombre,
-
-                    direccion: direccion,
-
-                    fecha:
-                        firebase.firestore.Timestamp.now()
-
-                };
-
-
-                db.collection("pedidos")
-                    .add(pedido)
-
-                    .then(function () {
-
-                        alert(
-                            "Pedido guardado correctamente."
-                        );
-
-
-                        document.getElementById(
-                            "nombreCliente"
-                        ).value = "";
-
-
-                        document.getElementById(
-                            "direccion"
-                        ).value = "";
-
-
-                        document.getElementById(
-                            "platillo"
-                        ).selectedIndex = 0;
-
+                    if (typeof M !== "undefined") {
 
                         M.FormSelect.init(
                             document.querySelectorAll(
@@ -288,57 +290,60 @@ document.addEventListener("DOMContentLoaded", function () {
                             )
                         );
 
-
                         M.updateTextFields();
 
-                    })
+                    }
 
-                    .catch(function (error) {
+                })
 
-                        console.error(error);
+                .catch(function (error) {
 
-                        alert(
-                            "Error al guardar el pedido."
-                        );
+                    console.error(error);
 
-                    });
+                    alert(
+                        "Error al guardar el pedido."
+                    );
 
-            }
-        );
+                });
 
-    }
+        }
+    );
 
-
-    // =====================================
-    // CANCELAR
-    // =====================================
-
-    const cancelar =
-        document.getElementById(
-            "cancelarPedido"
-        );
+}
 
 
-    if (cancelar) {
+// =====================================
+// CANCELAR
+// =====================================
 
-        cancelar.addEventListener(
-            "click",
-            function () {
-
-                document.getElementById(
-                    "nombreCliente"
-                ).value = "";
-
-
-                document.getElementById(
-                    "direccion"
-                ).value = "";
+const cancelar =
+    document.getElementById(
+        "cancelarPedido"
+    );
 
 
-                document.getElementById(
-                    "platillo"
-                ).selectedIndex = 0;
+if (cancelar) {
 
+    cancelar.addEventListener(
+        "click",
+        function () {
+
+            document.getElementById(
+                "nombreCliente"
+            ).value = "";
+
+
+            document.getElementById(
+                "direccion"
+            ).value = "";
+
+
+            document.getElementById(
+                "platillo"
+            ).selectedIndex = 0;
+
+
+            if (typeof M !== "undefined") {
 
                 M.FormSelect.init(
                     document.querySelectorAll(
@@ -346,16 +351,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     )
                 );
 
-
                 M.updateTextFields();
 
             }
-        );
 
-    }
+        }
+    );
+
+}
+```
 
 });
-
 
 // =====================================
 // UBICACIÓN CORRECTA
@@ -363,91 +369,98 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function ubicacionCorrecta(posicion) {
 
-    const latitud =
-        posicion.coords.latitude;
+```
+const latitud =
+    posicion.coords.latitude;
 
 
-    const longitud =
-        posicion.coords.longitude;
+const longitud =
+    posicion.coords.longitude;
 
 
-    if (mapa) {
+if (mapa) {
 
-        mapa.setView(
-            [latitud, longitud],
-            17
-        );
+    mapa.setView(
+        [latitud, longitud],
+        17
+    );
 
-    }
-
-
-    if (marcador) {
-
-        marcador.setLatLng(
-            [latitud, longitud]
-        );
-
-    }
+}
 
 
-    const url =
-        "https://nominatim.openstreetmap.org/reverse" +
-        "?lat=" + latitud +
-        "&lon=" + longitud +
-        "&format=json";
+if (marcador) {
+
+    marcador.setLatLng(
+        [latitud, longitud]
+    );
+
+}
 
 
-    fetch(url)
-
-        .then(function (respuesta) {
-
-            return respuesta.json();
-
-        })
-
-        .then(function (datos) {
-
-            const campo =
-                document.getElementById(
-                    "direccion"
-                );
+const url =
+    "https://nominatim.openstreetmap.org/reverse" +
+    "?lat=" + latitud +
+    "&lon=" + longitud +
+    "&format=json";
 
 
-            if (campo) {
+fetch(url)
 
-                campo.value =
-                    datos.display_name || "";
+    .then(function (respuesta) {
+
+        return respuesta.json();
+
+    })
+
+    .then(function (datos) {
+
+
+        const campo =
+            document.getElementById(
+                "direccion"
+            );
+
+
+        if (campo) {
+
+            campo.value =
+                datos.display_name || "";
+
+
+            if (typeof M !== "undefined") {
 
                 M.updateTextFields();
 
             }
 
+        }
 
-            if (marcador) {
 
-                marcador
-                    .bindPopup(
-                        datos.display_name ||
-                        "Ubicación actual"
-                    )
-                    .openPopup();
+        if (marcador) {
 
-            }
+            marcador
+                .bindPopup(
+                    datos.display_name ||
+                    "Ubicación actual"
+                )
+                .openPopup();
 
-        })
+        }
 
-        .catch(function (error) {
+    })
 
-            console.error(error);
+    .catch(function (error) {
 
-            alert(
-                "No se pudo obtener la dirección."
-            );
+        console.error(error);
 
-        });
+        alert(
+            "No se pudo obtener la dirección."
+        );
+
+    });
+```
 
 }
-
 
 // =====================================
 // ERROR DE UBICACIÓN
@@ -455,12 +468,14 @@ function ubicacionCorrecta(posicion) {
 
 function ubicacionError(error) {
 
-    console.error(error);
+```
+console.error(error);
 
-    alert(
-        "No se pudo obtener la ubicación.\n\n" +
-        error.message
-    );
+
+alert(
+    "No se pudo obtener la ubicación.\n\n" +
+    error.message
+);
+```
 
 }
-```
