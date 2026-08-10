@@ -18,21 +18,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // INICIALIZAR MAPA
     // ==========================
 
-    mapa = L.map("mapa").setView(
-        [19.4326, -99.1332],
-        13
-    );
+    const elementoMapa = document.getElementById("mapa");
 
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            attribution: "&copy; OpenStreetMap"
-        }
-    ).addTo(mapa);
+    if (elementoMapa && typeof L !== "undefined") {
 
-    marcador = L.marker(
-        [19.4326, -99.1332]
-    ).addTo(mapa);
+        mapa = L.map("mapa").setView(
+            [19.4326, -99.1332],
+            13
+        );
+
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    "&copy; OpenStreetMap contributors"
+            }
+        ).addTo(mapa);
+
+
+        marcador = L.marker(
+            [19.4326, -99.1332]
+        ).addTo(mapa);
+
+    } else {
+
+        console.error(
+            "No se pudo inicializar el mapa."
+        );
+
+    }
 
 
     // ==========================
@@ -47,12 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!lista) {
                 console.error(
-                    "No existe el elemento con id platillo"
+                    "No existe el selector de platillos."
                 );
                 return;
             }
 
+
             lista.innerHTML = "";
+
 
             const opcionInicial =
                 document.createElement("option");
@@ -60,43 +77,58 @@ document.addEventListener("DOMContentLoaded", function () {
             opcionInicial.value = "";
             opcionInicial.disabled = true;
             opcionInicial.selected = true;
+
             opcionInicial.textContent =
                 "Seleccione un platillo";
 
-            lista.appendChild(opcionInicial);
+
+            lista.appendChild(
+                opcionInicial
+            );
 
 
-            snapshot.forEach(function (doc) {
+            snapshot.forEach(
+                function (doc) {
 
-                const datos = doc.data();
+                    const datos = doc.data();
 
-                if (datos.nombre) {
 
-                    const opcion =
-                        document.createElement("option");
+                    if (datos.nombre) {
 
-                    opcion.value = datos.nombre;
+                        const opcion =
+                            document.createElement(
+                                "option"
+                            );
 
-                    opcion.textContent =
-                        datos.nombre;
+                        opcion.value =
+                            datos.nombre;
 
-                    lista.appendChild(opcion);
+                        opcion.textContent =
+                            datos.nombre;
+
+
+                        lista.appendChild(
+                            opcion
+                        );
+
+                    }
+
                 }
+            );
 
-            });
-
-
-            // Inicializar Materialize
 
             M.FormSelect.init(
-                document.querySelectorAll("select")
+                document.querySelectorAll(
+                    "select"
+                )
             );
 
         },
+
         function (error) {
 
             console.error(
-                "Error al cargar los platillos:",
+                "Error al cargar platillos:",
                 error
             );
 
@@ -105,11 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==========================
-    // BOTÓN GUARDAR
+    // GUARDAR PEDIDO
     // ==========================
 
     const botonGuardar =
-        document.getElementById("guardarPedido");
+        document.getElementById(
+            "guardarPedido"
+        );
+
 
     if (botonGuardar) {
 
@@ -122,10 +157,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         "platillo"
                     ).value;
 
+
                 const nombre =
                     document.getElementById(
                         "nombreCliente"
                     ).value;
+
 
                 const direccion =
                     document.getElementById(
@@ -140,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
+
                 }
 
 
@@ -150,6 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
+
                 }
 
 
@@ -160,6 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
+
                 }
 
 
@@ -180,52 +220,58 @@ document.addEventListener("DOMContentLoaded", function () {
                 db.collection("pedidos")
                     .add(pedido)
 
-                    .then(function () {
+                    .then(
+                        function () {
 
-                        alert(
-                            "Pedido guardado correctamente"
-                        );
-
-
-                        document.getElementById(
-                            "nombreCliente"
-                        ).value = "";
-
-
-                        document.getElementById(
-                            "direccion"
-                        ).value = "";
-
-
-                        const select =
-                            document.getElementById(
-                                "platillo"
+                            alert(
+                                "Pedido guardado correctamente"
                             );
 
 
-                        select.selectedIndex = 0;
+                            document.getElementById(
+                                "nombreCliente"
+                            ).value = "";
 
 
-                        M.FormSelect.init(
-                            document.querySelectorAll(
-                                "select"
-                            )
-                        );
+                            document.getElementById(
+                                "direccion"
+                            ).value = "";
 
 
-                        M.updateTextFields();
+                            const select =
+                                document.getElementById(
+                                    "platillo"
+                                );
 
-                    })
 
-                    .catch(function (error) {
+                            select.selectedIndex = 0;
 
-                        console.error(error);
 
-                        alert(
-                            "Error al guardar el pedido."
-                        );
+                            M.FormSelect.init(
+                                document.querySelectorAll(
+                                    "select"
+                                )
+                            );
 
-                    });
+
+                            M.updateTextFields();
+
+                        }
+                    )
+
+                    .catch(
+                        function (error) {
+
+                            console.error(
+                                error
+                            );
+
+                            alert(
+                                "Error al guardar el pedido."
+                            );
+
+                        }
+                    );
 
             }
         );
@@ -234,13 +280,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==========================
-    // BOTÓN CANCELAR
+    // CANCELAR
     // ==========================
 
     const botonCancelar =
         document.getElementById(
             "cancelarPedido"
         );
+
 
     if (botonCancelar) {
 
@@ -283,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==========================
-    // BOTÓN OBTENER UBICACIÓN
+    // OBTENER UBICACIÓN
     // ==========================
 
     const btnUbicacion =
@@ -324,12 +371,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // ==========================
-// VARIABLES DEL MAPA
+// VARIABLES
 // ==========================
 
-let mapa;
+let mapa = null;
 
-let marcador;
+let marcador = null;
 
 
 // ==========================
@@ -341,26 +388,29 @@ function exito(posicion) {
     const latitud =
         posicion.coords.latitude;
 
+
     const longitud =
         posicion.coords.longitude;
 
 
-    // Mover mapa
+    if (mapa) {
 
-    mapa.setView(
-        [latitud, longitud],
-        17
-    );
+        mapa.setView(
+            [latitud, longitud],
+            17
+        );
 
-
-    // Mover marcador
-
-    marcador.setLatLng(
-        [latitud, longitud]
-    );
+    }
 
 
-    // Obtener dirección
+    if (marcador) {
+
+        marcador.setLatLng(
+            [latitud, longitud]
+        );
+
+    }
+
 
     const url =
         "https://nominatim.openstreetmap.org/reverse" +
@@ -371,48 +421,58 @@ function exito(posicion) {
 
     fetch(url)
 
-        .then(function (respuesta) {
+        .then(
+            function (respuesta) {
 
-            return respuesta.json();
-
-        })
-
-        .then(function (data) {
-
-            const direccion =
-                document.getElementById(
-                    "direccion"
-                );
-
-
-            if (direccion) {
-
-                direccion.value =
-                    data.display_name || "";
-
-                M.updateTextFields();
+                return respuesta.json();
 
             }
+        )
+
+        .then(
+            function (data) {
+
+                const direccion =
+                    document.getElementById(
+                        "direccion"
+                    );
 
 
-            marcador
-                .bindPopup(
-                    data.display_name ||
-                    "Ubicación actual"
-                )
-                .openPopup();
+                if (direccion) {
 
-        })
+                    direccion.value =
+                        data.display_name || "";
 
-        .catch(function (error) {
+                    M.updateTextFields();
 
-            console.error(error);
+                }
 
-            alert(
-                "No se pudo obtener la dirección."
-            );
 
-        });
+                if (marcador) {
+
+                    marcador
+                        .bindPopup(
+                            data.display_name ||
+                            "Ubicación actual"
+                        )
+                        .openPopup();
+
+                }
+
+            }
+        )
+
+        .catch(
+            function (error) {
+
+                console.error(error);
+
+                alert(
+                    "No se pudo obtener la dirección."
+                );
+
+            }
+        );
 
 }
 
