@@ -1,537 +1,489 @@
-<!DOCTYPE html>
+```html
+<meta charset="UTF-8">
 
-<html lang="es">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-<head>
+<meta
+    http-equiv="X-UA-Compatible"
+    content="ie=edge">
 
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <meta
-        http-equiv="X-UA-Compatible"
-        content="ie=edge">
-
-    <title>REATS</title>
+<title>REATS</title>
 
 
-    <link
-        rel="icon"
-        href="/favicon.ico">
+<link
+    rel="icon"
+    href="./favicon.ico">
 
 
-    <!-- Materialize CSS -->
+<!-- Materialize CSS -->
 
-    <link
-        rel="stylesheet"
-        href="/css/materialize.min.css">
-
-
-    <!-- Iconos -->
-
-    <link
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet">
+<link
+    rel="stylesheet"
+    href="./css/materialize.min.css">
 
 
-    <!-- Estilos -->
+<!-- Iconos -->
 
-    <link
-        rel="stylesheet"
-        href="/css/styles.css">
-
-
-    <!-- Materialize JS -->
-
-    <script
-        src="/js/materialize.min.js">
-    </script>
-
-</head>
+<link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
 
 
-<body class="grey lighten-4">
+<!-- Estilos -->
+
+<link
+    rel="stylesheet"
+    href="./css/styles.css">
 
 
-    <!-- =====================================
-         BARRA SUPERIOR
-    ====================================== -->
+<!-- Materialize JS -->
 
-    <nav class="z-depth-0">
-
-        <div class="nav-wrapper container">
+<script
+    src="./js/materialize.min.js">
+</script>
 
 
-            <a href="/">
+<!-- =====================================
+     BARRA SUPERIOR
+====================================== -->
 
-                REATS
+<nav class="z-depth-0">
 
-            </a>
+    <div class="nav-wrapper container">
+
+        <a href="./">
+
+            REATS
+
+        </a>
 
 
-            <span
-                class="right grey-text text-darken-1">
+        <span
+            class="right grey-text text-darken-1">
+
+            <i
+                class="material-icons sidenav-trigger"
+                data-target="side-menu">
+
+                menu
+
+            </i>
+
+        </span>
+
+    </div>
+
+</nav>
 
 
-                <i
-                    class="material-icons sidenav-trigger"
-                    data-target="side-menu">
 
-                    menu
+<!-- =====================================
+     MENÚ LATERAL
+====================================== -->
+
+<ul
+    id="side-menu"
+    class="sidenav side-menu">
+
+
+    <li>
+
+        <a class="subheader">
+
+            REATS
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a
+            href="./"
+            class="waves-effect">
+
+            Inicio
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a
+            href="./pages/pedidos.html"
+            class="waves-effect">
+
+            Pedidos
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <a
+            href="./pages/about.html"
+            class="waves-effect">
+
+            Acerca de
+
+        </a>
+
+    </li>
+
+
+    <li>
+
+        <div class="divider"></div>
+
+    </li>
+
+
+    <li>
+
+        <a
+            href="./pages/contact.html"
+            class="waves-effect">
+
+            <i class="material-icons">
+
+                mail_outline
+
+            </i>
+
+            Contacto
+
+        </a>
+
+    </li>
+
+
+</ul>
+
+
+
+<!-- =====================================
+     LISTA DE PLATILLOS
+====================================== -->
+
+<div
+    class="recipes container grey-text text-darken-1">
+
+</div>
+
+
+
+<!-- =====================================
+     BOTÓN AGREGAR
+====================================== -->
+
+<div class="center">
+
+    <a
+        class="btn-floating btn-large add-btn sidenav-trigger"
+        data-target="side-form">
+
+        <i class="material-icons">
+
+            add
+
+        </i>
+
+    </a>
+
+</div>
+
+
+
+<!-- =====================================
+     FORMULARIO
+====================================== -->
+
+<div
+    id="side-form"
+    class="sidenav side-form">
+
+
+    <form
+        class="add-recipe container section">
+
+
+        <h5>
+
+            Nuevo Platillo
+
+        </h5>
+
+
+        <div class="divider"></div>
+
+        <br>
+
+
+
+        <!-- NOMBRE -->
+
+        <div class="input-field">
+
+            <input
+                id="title"
+                name="title"
+                type="text"
+                required>
+
+            <label for="title">
+
+                Nombre
+
+            </label>
+
+        </div>
+
+
+
+        <!-- INGREDIENTES -->
+
+        <div class="input-field">
+
+            <input
+                id="Ingredientes"
+                name="Ingredientes"
+                type="text"
+                required>
+
+            <label for="Ingredientes">
+
+                Ingredientes
+
+            </label>
+
+        </div>
+
+
+
+        <!-- PRECIO -->
+
+        <div class="input-field">
+
+            <input
+                id="Precio"
+                name="Precio"
+                type="number"
+                required>
+
+            <label for="Precio">
+
+                Precio
+
+            </label>
+
+        </div>
+
+
+
+        <!-- =================================
+             BOTÓN TOMAR FOTO
+        ================================== -->
+
+        <div
+            class="input-field center">
+
+            <button
+                type="button"
+                id="btnFoto"
+                class="btn waves-effect waves-light">
+
+                <i class="material-icons left">
+
+                    camera_alt
 
                 </i>
 
+                Tomar foto
 
-            </span>
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================
+             CÁMARA
+        ================================== -->
+
+        <div
+            id="camara"
+            style="
+                display:none;
+                text-align:center;
+                margin-top:15px;
+            ">
+
+
+            <video
+                id="video"
+                autoplay
+                playsinline
+                style="
+                    width:100%;
+                    max-width:400px;
+                    border-radius:10px;
+                ">
+
+            </video>
+
+
+            <br>
+            <br>
+
+
+            <button
+                type="button"
+                id="btnCapturar"
+                class="btn green">
+
+                <i class="material-icons left">
+
+                    camera
+
+                </i>
+
+                Capturar
+
+            </button>
+
+
+            <button
+                type="button"
+                id="btnCerrarCamara"
+                class="btn red">
+
+                Cerrar
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================
+             CANVAS
+        ================================== -->
+
+        <canvas
+            id="canvas"
+            style="display:none;">
+
+        </canvas>
+
+
+
+        <!-- =================================
+             VISTA PREVIA
+        ================================== -->
+
+        <div
+            id="salida"
+            style="
+                text-align:center;
+                margin-top:15px;
+            ">
+
+
+            <img
+                id="foto"
+                src=""
+                alt="Foto del platillo"
+                style="
+                    display:none;
+                    width:100%;
+                    max-width:300px;
+                    border-radius:10px;
+                ">
 
 
         </div>
 
-    </nav>
 
 
+        <!-- =================================
+             AGREGAR PLATILLO
+        ================================== -->
 
-    <!-- =====================================
-         MENÚ LATERAL
-    ====================================== -->
+        <div
+            class="input-field center">
 
-    <ul
-        id="side-menu"
-        class="sidenav side-menu">
+            <button
+                id="btnAgregarPlatillo"
+                type="submit"
+                class="btn">
 
+                <i class="material-icons left">
 
-        <li>
-
-            <a class="subheader">
-
-                REATS
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <a
-                href="/"
-                class="waves-effect">
-
-                Inicio
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <a
-                href="/pages/pedidos.html"
-                class="waves-effect">
-
-                Pedidos
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <a
-                href="/pages/about.html"
-                class="waves-effect">
-
-                Acerca de
-
-            </a>
-
-        </li>
-
-
-        <li>
-
-            <div class="divider"></div>
-
-        </li>
-
-
-        <li>
-
-            <a
-                href="/pages/contact.html"
-                class="waves-effect">
-
-
-                <i class="material-icons">
-
-                    mail_outline
+                    add
 
                 </i>
 
+                Agregar Platillo
 
-                Contacto
+            </button>
 
+        </div>
 
-            </a>
 
-        </li>
+    </form>
 
+</div>
 
-    </ul>
 
 
+<!-- =====================================
+     FIREBASE
+====================================== -->
 
-    <!-- =====================================
-         LISTA DE PLATILLOS
-    ====================================== -->
+<script
+    src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
+</script>
 
-    <div
-        class="recipes container grey-text text-darken-1">
 
-    </div>
+<!-- =====================================
+     FIRESTORE
+====================================== -->
 
+<script
+    src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
+</script>
 
 
-    <!-- =====================================
-         BOTÓN AGREGAR
-    ====================================== -->
+<!-- =====================================
+     CONFIGURACIÓN FIREBASE
+====================================== -->
 
-    <div class="center">
+<script
+    src="./js/firebase.js">
+</script>
 
-        <a
-            class="btn-floating btn-large add-btn sidenav-trigger"
-            data-target="side-form">
 
+<!-- =====================================
+     INTERFAZ
+====================================== -->
 
-            <i class="material-icons">
+<script
+    src="./js/index.js">
+</script>
 
-                add
 
-            </i>
+<!-- =====================================
+     BASE DE DATOS
+====================================== -->
 
-
-        </a>
-
-    </div>
-
-
-
-    <!-- =====================================
-         FORMULARIO
-    ====================================== -->
-
-    <div
-        id="side-form"
-        class="sidenav side-form">
-
-
-        <form
-            class="add-recipe container section">
-
-
-            <h5>
-
-                Nuevo Platillo
-
-            </h5>
-
-
-            <div class="divider"></div>
-
-            <br>
-
-
-
-            <!-- NOMBRE -->
-
-            <div class="input-field">
-
-
-                <input
-                    id="title"
-                    name="title"
-                    type="text"
-                    required>
-
-
-                <label for="title">
-
-                    Nombre
-
-                </label>
-
-
-            </div>
-
-
-
-            <!-- INGREDIENTES -->
-
-            <div class="input-field">
-
-
-                <input
-                    id="Ingredientes"
-                    name="Ingredientes"
-                    type="text"
-                    required>
-
-
-                <label for="Ingredientes">
-
-                    Ingredientes
-
-                </label>
-
-
-            </div>
-
-
-
-            <!-- PRECIO -->
-
-            <div class="input-field">
-
-
-                <input
-                    id="Precio"
-                    name="Precio"
-                    type="number"
-                    required>
-
-
-                <label for="Precio">
-
-                    Precio
-
-                </label>
-
-
-            </div>
-
-
-
-            <!-- =================================
-                 BOTÓN TOMAR FOTO
-            ================================== -->
-
-            <div
-                class="input-field center">
-
-
-                <button
-                    type="button"
-                    id="btnFoto"
-                    class="btn waves-effect waves-light">
-
-
-                    <i class="material-icons left">
-
-                        camera_alt
-
-                    </i>
-
-
-                    Tomar foto
-
-
-                </button>
-
-
-            </div>
-
-
-
-            <!-- =================================
-                 CÁMARA
-            ================================== -->
-
-            <div
-                id="camara"
-                style="
-                    display:none;
-                    text-align:center;
-                    margin-top:15px;
-                ">
-
-
-                <video
-                    id="video"
-                    autoplay
-                    playsinline
-                    style="
-                        width:100%;
-                        max-width:400px;
-                        border-radius:10px;
-                    ">
-
-                </video>
-
-
-                <br>
-                <br>
-
-
-                <button
-                    type="button"
-                    id="btnCapturar"
-                    class="btn green">
-
-
-                    <i class="material-icons left">
-
-                        camera
-
-                    </i>
-
-
-                    Capturar
-
-
-                </button>
-
-
-                <button
-                    type="button"
-                    id="btnCerrarCamara"
-                    class="btn red">
-
-
-                    Cerrar
-
-
-                </button>
-
-
-            </div>
-
-
-
-            <!-- =================================
-                 CANVAS
-            ================================== -->
-
-            <canvas
-                id="canvas"
-                style="display:none;">
-
-            </canvas>
-
-
-
-            <!-- =================================
-                 VISTA PREVIA
-            ================================== -->
-
-            <div
-                id="salida"
-                style="
-                    text-align:center;
-                    margin-top:15px;
-                ">
-
-
-                <img
-                    id="foto"
-                    src=""
-                    alt="Foto del platillo"
-                    style="
-                        display:none;
-                        width:100%;
-                        max-width:300px;
-                        border-radius:10px;
-                    ">
-
-
-            </div>
-
-
-
-            <!-- =================================
-                 AGREGAR PLATILLO
-            ================================== -->
-
-            <div
-                class="input-field center">
-
-
-                <button
-                    id="btnAgregarPlatillo"
-                    type="submit"
-                    class="btn">
-
-
-                    <i class="material-icons left">
-
-                        add
-
-                    </i>
-
-
-                    Agregar Platillo
-
-
-                </button>
-
-
-            </div>
-
-
-        </form>
-
-    </div>
-
-
-
-    <!-- =====================================
-         FIREBASE
-    ====================================== -->
-
-    <script
-        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
-    </script>
-
-
-    <!-- =====================================
-         FIRESTORE
-    ====================================== -->
-
-    <script
-        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
-    </script>
-
-
-    <!-- =====================================
-         CONFIGURACIÓN FIREBASE
-    ====================================== -->
-
-    <script
-        src="/js/firebase.js">
-    </script>
-
-
-    <!-- =====================================
-         INTERFAZ
-    ====================================== -->
-
-    <script
-        src="/js/index.js">
-    </script>
-
-
-    <!-- =====================================
-         BASE DE DATOS
-    ====================================== -->
-
-    <script
-        src="/js/db.js">
-    </script>
-
-
-</body>
-
-</html>
+<script
+    src="./js/db.js">
+</script>
+```
