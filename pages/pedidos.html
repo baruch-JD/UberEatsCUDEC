@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -11,173 +12,346 @@
 
     <title>REATS - Pedidos</title>
 
-    <link rel="stylesheet" href="/css/materialize.min.css">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- MATERIALIZE CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/materialize.min.css">
 
-    <link rel="stylesheet" href="/css/styles.css">
 
-    <script src="/js/materialize.min.js"></script>
+    <!-- ICONOS -->
+    <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
 
-    <!-- Leaflet -->
-    <link rel="stylesheet"
+
+    <!-- ESTILOS -->
+    <link
+        rel="stylesheet"
+        href="../css/styles.css">
+
+
+    <!-- MATERIALIZE JS -->
+    <script
+        src="../js/materialize.min.js">
+    </script>
+
+
+    <!-- LEAFLET CSS -->
+    <link
+        rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin="" />
+        crossorigin="">
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- LEAFLET JS -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
 
     <style>
+
         #mapa {
+
             height: 300px;
             width: 100%;
             margin-top: 20px;
             border-radius: 10px;
+
         }
+
     </style>
 
 </head>
 
-<body class="grey lighten-4">
 
-<nav class="z-depth-0">
+<body>
 
-<div class="nav-wrapper container">
 
-<a href="/">REATS</a>
+    <!-- =====================================
+         BARRA SUPERIOR
+    ====================================== -->
 
-<span class="right grey-text text-darken-1">
+    <nav class="z-depth-0">
 
-<i class="material-icons sidenav-trigger" data-target="side-menu">
-menu
-</i>
+        <div class="nav-wrapper container">
 
-</span>
+            <a href="../">
 
-</div>
+                REATS
 
-</nav>
+            </a>
 
-<ul id="side-menu" class="sidenav side-menu">
 
-<li><a class="subheader">REATS</a></li>
+            <span class="right grey-text text-darken-1">
 
-<li><a href="/" class="waves-effect">Inicio</a></li>
+                <i
+                    class="material-icons sidenav-trigger"
+                    data-target="side-menu">
 
-<li><a href="/pages/pedidos.html" class="waves-effect">Pedidos</a></li>
+                    menu
 
-<li><a href="/pages/about.html" class="waves-effect">Acerca de</a></li>
+                </i>
 
-<li><div class="divider"></div></li>
+            </span>
 
-<li>
+        </div>
 
-<a href="/pages/contact.html" class="waves-effect">
+    </nav>
 
-<i class="material-icons">mail_outline</i>
 
-Contacto
 
-</a>
+    <!-- =====================================
+         MENÚ LATERAL
+    ====================================== -->
 
-</li>
+    <ul
+        id="side-menu"
+        class="sidenav side-menu">
 
-</ul>
 
-<div class="container">
+        <li>
 
-<h4 class="center">Nuevo Pedido</h4>
+            <a class="subheader">
 
-<form id="formPedido">
+                REATS
 
-<div class="input-field">
+            </a>
 
-<select id="listaplatillos" required>
+        </li>
 
-<option value="" disabled selected>
 
-Seleccione un platillo
+        <li>
 
-</option>
+            <a
+                href="../"
+                class="waves-effect">
 
-</select>
+                Inicio
 
-<label>Platillo</label>
+            </a>
 
-</div>
+        </li>
 
-<div class="input-field">
 
-<input
-type="text"
-id="nombre"
-required>
+        <li>
 
-<label for="nombre">
+            <a
+                href="./pedidos.html"
+                class="waves-effect">
 
-Nombre del cliente
+                Pedidos
 
-</label>
+            </a>
 
-</div>
+        </li>
 
-<div class="input-field">
 
-<input
-type="text"
-id="direccion"
-required>
+        <li>
 
-<label for="direccion">
+            <a
+                href="./about.html"
+                class="waves-effect">
 
-Dirección
+                Acerca de
 
-</label>
+            </a>
 
-</div>
+        </li>
 
-<div class="center">
 
-<button
-class="btn green"
-type="submit">
+        <li>
 
-Guardar
+            <div class="divider"></div>
 
-</button>
+        </li>
 
-<button
-class="btn red"
-type="reset">
 
-Cancelar
+        <li>
 
-</button>
+            <a
+                href="./contact.html"
+                class="waves-effect">
 
-</div>
 
-</form>
+                <i class="material-icons">
 
-<br>
+                    mail_outline
 
-<button id="btnUbicacion" class="btn blue">
+                </i>
 
-Obtener ubicación
 
-</button>
+                Contacto
 
-<div id="mapa"></div>
 
-</div>
+            </a>
 
-<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+        </li>
 
-<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
-<script src="/js/firebase.js"></script>
+    </ul>
 
-<script src="/js/pedidos.js"></script>
+
+
+    <!-- =====================================
+         CONTENIDO
+    ====================================== -->
+
+    <main class="container section">
+
+
+        <h5>
+
+            Seleccione un platillo
+
+        </h5>
+
+
+        <!-- PLATILLO -->
+
+        <div class="input-field">
+
+            <select id="platillo">
+
+                <option
+                    value=""
+                    disabled
+                    selected>
+
+                    Platillo
+
+                </option>
+
+            </select>
+
+
+            <label>
+
+                Platillo
+
+            </label>
+
+        </div>
+
+
+
+        <!-- NOMBRE DEL CLIENTE -->
+
+        <div class="input-field">
+
+            <input
+                id="nombreCliente"
+                type="text"
+                required>
+
+
+            <label for="nombreCliente">
+
+                Nombre del cliente
+
+            </label>
+
+        </div>
+
+
+
+        <!-- DIRECCIÓN -->
+
+        <div class="input-field">
+
+            <input
+                id="direccion"
+                type="text"
+                required>
+
+
+            <label for="direccion">
+
+                Dirección
+
+            </label>
+
+        </div>
+
+
+
+        <!-- MAPA -->
+
+        <div id="mapa"></div>
+
+
+        <br>
+
+
+
+        <!-- OBTENER UBICACIÓN -->
+
+        <div class="center">
+
+            <button
+                type="button"
+                id="btnUbicacion"
+                class="btn waves-effect waves-light">
+
+                <i class="material-icons left">
+
+                    location_on
+
+                </i>
+
+                Obtener ubicación
+
+            </button>
+
+        </div>
+
+
+        <br>
+
+
+
+        <!-- BOTONES -->
+
+        <div class="center">
+
+            <button
+                type="button"
+                id="guardarPedido"
+                class="btn green waves-effect waves-light">
+
+                Guardar
+
+            </button>
+
+
+            <button
+                type="button"
+                id="cancelarPedido"
+                class="btn red waves-effect waves-light">
+
+                Cancelar
+
+            </button>
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- =====================================
+         PEDIDOS JS
+    ====================================== -->
+
+    <script
+        src="../js/pedidos.js">
+    </script>
+
 
 </body>
 
 </html>
+```
