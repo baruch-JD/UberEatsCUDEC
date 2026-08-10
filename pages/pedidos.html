@@ -1,292 +1,418 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
 
-```
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>REATS - Pedidos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Materialize -->
-<link rel="stylesheet" href="../css/materialize.min.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<!-- Material Icons -->
-<link rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>REATS - Pedidos</title>
 
-<!-- Estilos -->
-<link rel="stylesheet" href="../css/styles.css">
 
-<!-- Leaflet -->
-<link rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      crossorigin="">
+    <!-- MATERIALIZE CSS -->
+    <link rel="stylesheet" href="../css/materialize.min.css">
 
-<style>
-    #mapa {
-        width: 100%;
-        height: 300px;
-        min-height: 300px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        display: block;
-        z-index: 1;
-    }
-</style>
-```
+
+    <!-- ICONOS -->
+    <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
+
+    <!-- ESTILOS -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+
+    <!-- LEAFLET CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossorigin="">
+
+
+    <style>
+
+        #mapa {
+
+            width: 100%;
+            height: 300px;
+            min-height: 300px;
+
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            border-radius: 10px;
+
+            display: block;
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-```
-<!-- BARRA SUPERIOR -->
 
-<nav class="z-depth-0">
+    <!-- ==============================
+         BARRA SUPERIOR
+    =============================== -->
 
-    <div class="nav-wrapper container">
+    <nav class="z-depth-0">
 
-        <a href="../index.html">
-            REATS
-        </a>
-
-        <span class="right grey-text text-darken-1">
-
-            <i class="material-icons sidenav-trigger"
-               data-target="side-menu">
-                menu
-            </i>
-
-        </span>
-
-    </div>
-
-</nav>
+        <div class="nav-wrapper container">
 
 
-<!-- MENÚ -->
+            <a href="../index.html">
 
-<ul id="side-menu"
-    class="sidenav side-menu">
+                REATS
 
-    <li>
-        <a class="subheader">
-            REATS
-        </a>
-    </li>
-
-    <li>
-        <a href="../index.html"
-           class="waves-effect">
-
-            <i class="material-icons left">
-                home
-            </i>
-
-            Inicio
-
-        </a>
-    </li>
-
-    <li>
-        <a href="pedidos.html"
-           class="waves-effect">
-
-            <i class="material-icons left">
-                receipt
-            </i>
-
-            Pedidos
-
-        </a>
-    </li>
-
-    <li>
-        <a href="about.html"
-           class="waves-effect">
-
-            <i class="material-icons left">
-                info
-            </i>
-
-            Acerca de
-
-        </a>
-    </li>
-
-    <li>
-        <div class="divider"></div>
-    </li>
-
-    <li>
-        <a href="contact.html"
-           class="waves-effect">
-
-            <i class="material-icons left">
-                mail_outline
-            </i>
-
-            Contacto
-
-        </a>
-    </li>
-
-</ul>
+            </a>
 
 
-<!-- CONTENIDO -->
+            <span class="right grey-text text-darken-1">
 
-<main class="container section">
+                <i
+                    class="material-icons sidenav-trigger"
+                    data-target="side-menu">
 
-    <h5>
-        Seleccione un platillo
-    </h5>
+                    menu
+
+                </i>
+
+            </span>
 
 
-    <!-- PLATILLO -->
+        </div>
 
-    <div class="input-field">
+    </nav>
 
-        <select id="platillo">
 
-            <option value=""
+
+    <!-- ==============================
+         MENÚ LATERAL
+    =============================== -->
+
+    <ul
+        id="side-menu"
+        class="sidenav side-menu">
+
+
+        <li>
+
+            <a class="subheader">
+
+                REATS
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="../index.html"
+                class="waves-effect">
+
+                <i class="material-icons left">
+
+                    home
+
+                </i>
+
+                Inicio
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="pedidos.html"
+                class="waves-effect">
+
+                <i class="material-icons left">
+
+                    receipt
+
+                </i>
+
+                Pedidos
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="about.html"
+                class="waves-effect">
+
+                <i class="material-icons left">
+
+                    info
+
+                </i>
+
+                Acerca de
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <div class="divider"></div>
+
+        </li>
+
+
+        <li>
+
+            <a
+                href="contact.html"
+                class="waves-effect">
+
+                <i class="material-icons left">
+
+                    mail_outline
+
+                </i>
+
+                Contacto
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+
+
+    <!-- ==============================
+         CONTENIDO
+    =============================== -->
+
+    <main class="container section">
+
+
+        <h5>
+
+            Seleccione un platillo
+
+        </h5>
+
+
+
+        <!-- SELECTOR DE PLATILLO -->
+
+        <div class="input-field">
+
+            <select id="platillo">
+
+                <option
+                    value=""
                     disabled
                     selected>
 
-                Seleccione un platillo
+                    Seleccione un platillo
 
-            </option>
+                </option>
 
-        </select>
-
-        <label>
-            Platillo
-        </label>
-
-    </div>
+            </select>
 
 
-    <!-- NOMBRE -->
+            <label>
 
-    <div class="input-field">
+                Platillo
 
-        <input id="nombreCliente"
-               name="nombreCliente"
-               type="text">
+            </label>
 
-        <label for="nombreCliente">
-            Nombre del cliente
-        </label>
-
-    </div>
+        </div>
 
 
-    <!-- DIRECCIÓN -->
 
-    <div class="input-field">
+        <!-- NOMBRE DEL CLIENTE -->
 
-        <input id="direccion"
-               name="direccion"
-               type="text">
+        <div class="input-field">
 
-        <label for="direccion">
-            Dirección
-        </label>
-
-    </div>
+            <input
+                id="nombreCliente"
+                type="text"
+                required>
 
 
-    <!-- UBICACIÓN -->
+            <label for="nombreCliente">
 
-    <div class="center">
+                Nombre del cliente
 
-        <button type="button"
+            </label>
+
+        </div>
+
+
+
+        <!-- DIRECCIÓN -->
+
+        <div class="input-field">
+
+            <input
+                id="direccion"
+                type="text"
+                required>
+
+
+            <label for="direccion">
+
+                Dirección
+
+            </label>
+
+        </div>
+
+
+
+        <!-- BOTÓN UBICACIÓN -->
+
+        <div class="center">
+
+            <button
+                type="button"
                 id="btnUbicacion"
                 class="btn waves-effect waves-light">
 
-            <i class="material-icons left">
-                location_on
-            </i>
 
-            Obtener ubicación
+                <i class="material-icons left">
 
-        </button>
+                    location_on
 
-    </div>
+                </i>
 
 
-    <!-- MAPA -->
-
-    <div id="mapa"></div>
+                Obtener ubicación
 
 
-    <br>
+            </button>
+
+        </div>
 
 
-    <!-- BOTONES -->
 
-    <div class="center">
+        <!-- MAPA -->
 
-        <button type="button"
+        <div id="mapa"></div>
+
+
+
+        <br>
+
+
+
+        <!-- BOTONES -->
+
+        <div class="center">
+
+
+            <button
+                type="button"
                 id="guardarPedido"
                 class="btn green waves-effect waves-light">
 
-            <i class="material-icons left">
-                save
-            </i>
 
-            Guardar
+                <i class="material-icons left">
 
-        </button>
+                    save
+
+                </i>
 
 
-        <button type="button"
+                Guardar
+
+
+            </button>
+
+
+
+            <button
+                type="button"
                 id="cancelarPedido"
                 class="btn red waves-effect waves-light">
 
-            <i class="material-icons left">
-                cancel
-            </i>
 
-            Cancelar
+                <i class="material-icons left">
 
-        </button>
+                    cancel
 
-    </div>
-
-</main>
+                </i>
 
 
-<!-- ==============================
-     SCRIPTS
-=============================== -->
+                Cancelar
 
-<!-- Materialize -->
-<script src="../js/materialize.min.js"></script>
 
-<!-- Leaflet -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            </button>
+
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- ==============================
+         SCRIPTS
+    =============================== -->
+
+
+    <!-- MATERIALIZE -->
+
+    <script src="../js/materialize.min.js"></script>
+
+
+
+    <!-- LEAFLET -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         crossorigin="">
-</script>
+    </script>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
-<!-- Firebase configuración -->
-<script src="../js/firebase.js"></script>
+    <!-- FIREBASE -->
 
-<!-- Base de datos -->
-<script src="../js/db.js"></script>
+    <script
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js">
+    </script>
 
-<!-- Pedidos -->
-<script src="../js/pedidos.js"></script>
-```
+
+    <script
+        src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js">
+    </script>
+
+
+
+    <!-- FIREBASE CONFIG -->
+
+    <script src="../js/firebase.js"></script>
+
+
+
+    <!-- PEDIDOS -->
+
+    <script src="../js/pedidos.js"></script>
+
 
 </body>
 

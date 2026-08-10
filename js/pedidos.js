@@ -1,481 +1,546 @@
 let mapa = null;
 let marcador = null;
 
+
 document.addEventListener("DOMContentLoaded", function () {
 
-```
-console.log("pedidos.js cargado");
+
+    // =====================================
+    // MENÚ LATERAL
+    // =====================================
+
+    const menu = document.querySelectorAll(".sidenav");
 
 
-// =====================================
-// MENÚ LATERAL
-// =====================================
+    if (typeof M !== "undefined" && menu.length > 0) {
 
-const menu = document.querySelectorAll(".sidenav");
+        M.Sidenav.init(menu, {
+            edge: "right"
+        });
 
-if (typeof M !== "undefined" && menu.length > 0) {
-
-    M.Sidenav.init(menu, {
-        edge: "right"
-    });
-
-}
+    }
 
 
-// =====================================
-// SELECTOR DE PLATILLOS
-// =====================================
 
-const selector = document.getElementById("platillo");
+    // =====================================
+    // SELECTOR DE PLATILLOS
+    // =====================================
 
-if (selector && typeof db !== "undefined") {
-
-    db.collection("platillos").onSnapshot(function (snapshot) {
-
-        selector.innerHTML = "";
-
-        const inicial = document.createElement("option");
-
-        inicial.value = "";
-        inicial.disabled = true;
-        inicial.selected = true;
-        inicial.textContent = "Seleccione un platillo";
-
-        selector.appendChild(inicial);
+    const selector =
+        document.getElementById("platillo");
 
 
-        snapshot.forEach(function (doc) {
+    if (selector && typeof db !== "undefined") {
 
-            const datos = doc.data();
 
-            if (datos.nombre) {
+        db.collection("platillos").onSnapshot(
 
-                const opcion = document.createElement("option");
+            function (snapshot) {
 
-                opcion.value = datos.nombre;
-                opcion.textContent = datos.nombre;
 
-                selector.appendChild(opcion);
+                selector.innerHTML = "";
+
+
+                const inicial =
+                    document.createElement("option");
+
+
+                inicial.value = "";
+
+                inicial.disabled = true;
+
+                inicial.selected = true;
+
+                inicial.textContent =
+                    "Seleccione un platillo";
+
+
+                selector.appendChild(inicial);
+
+
+
+                snapshot.forEach(function (doc) {
+
+
+                    const platillo =
+                        doc.data();
+
+
+                    if (platillo.nombre) {
+
+
+                        const opcion =
+                            document.createElement("option");
+
+
+                        opcion.value =
+                            platillo.nombre;
+
+
+                        opcion.textContent =
+                            platillo.nombre;
+
+
+                        selector.appendChild(opcion);
+
+                    }
+
+                });
+
+
+
+                if (typeof M !== "undefined") {
+
+
+                    M.FormSelect.init(
+                        document.querySelectorAll("select")
+                    );
+
+                }
+
+            },
+
+
+            function (error) {
+
+                console.error(
+                    "Error cargando platillos:",
+                    error
+                );
 
             }
 
-        });
-
-
-        if (typeof M !== "undefined") {
-
-            M.FormSelect.init(
-                document.querySelectorAll("select")
-            );
-
-        }
-
-    }, function (error) {
-
-        console.error(
-            "Error cargando platillos:",
-            error
         );
 
-    });
-
-}
+    }
 
 
-// =====================================
-// MAPA
-// =====================================
 
-const elementoMapa = document.getElementById("mapa");
+    // =====================================
+    // INICIALIZAR MAPA
+    // =====================================
 
-
-if (elementoMapa && typeof L !== "undefined") {
-
-    console.log("Inicializando mapa");
+    const elementoMapa =
+        document.getElementById("mapa");
 
 
-    mapa = L.map("mapa").setView(
-        [19.4326, -99.1332],
-        13
-    );
+    if (
+        elementoMapa &&
+        typeof L !== "undefined"
+    ) {
 
 
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            attribution:
-                "&copy; OpenStreetMap contributors",
-            maxZoom: 19
-        }
-    ).addTo(mapa);
+        mapa = L.map("mapa").setView(
+            [19.4326, -99.1332],
+            13
+        );
 
 
-    marcador = L.marker(
-        [19.4326, -99.1332]
-    ).addTo(mapa);
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+
+                attribution:
+                    "&copy; OpenStreetMap contributors",
+
+                maxZoom: 19
+
+            }
+        ).addTo(mapa);
 
 
-    setTimeout(function () {
 
-        mapa.invalidateSize();
+        marcador =
+            L.marker(
+                [19.4326, -99.1332]
+            ).addTo(mapa);
 
-    }, 500);
 
-} else {
 
-    console.error(
-        "No se pudo inicializar Leaflet o el mapa."
-    );
+        setTimeout(function () {
 
-}
+            mapa.invalidateSize();
+
+        }, 500);
+
+    }
+
+
+
+    // =====================================
+    // BOTÓN OBTENER UBICACIÓN
+    // =====================================
+
+    const botonUbicacion =
+        document.getElementById("btnUbicacion");
+
+
+    if (botonUbicacion) {
+
+
+        botonUbicacion.addEventListener(
+            "click",
+            function () {
+
+
+                if (!navigator.geolocation) {
+
+                    alert(
+                        "Tu dispositivo no soporta geolocalización."
+                    );
+
+                    return;
+
+                }
+
+
+                navigator.geolocation.getCurrentPosition(
+                    obtenerUbicacion,
+                    errorUbicacion
+                );
+
+            }
+        );
+
+    }
+
+
+
+    // =====================================
+    // GUARDAR PEDIDO
+    // =====================================
+
+    const guardar =
+        document.getElementById(
+            "guardarPedido"
+        );
+
+
+    if (guardar) {
+
+
+        guardar.addEventListener(
+            "click",
+            function () {
+
+
+                const platillo =
+                    document.getElementById(
+                        "platillo"
+                    ).value;
+
+
+                const nombre =
+                    document.getElementById(
+                        "nombreCliente"
+                    ).value.trim();
+
+
+                const direccion =
+                    document.getElementById(
+                        "direccion"
+                    ).value.trim();
+
+
+
+                if (!platillo) {
+
+                    alert(
+                        "Seleccione un platillo."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!nombre) {
+
+                    alert(
+                        "Escriba el nombre del cliente."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!direccion) {
+
+                    alert(
+                        "Escriba la dirección."
+                    );
+
+                    return;
+
+                }
+
+
+
+                const pedido = {
+
+                    platillo: platillo,
+
+                    nombre: nombre,
+
+                    direccion: direccion,
+
+                    fecha:
+                        firebase.firestore.Timestamp.now()
+
+                };
+
+
+
+                db.collection("pedidos")
+                    .add(pedido)
+
+
+                    .then(function () {
+
+
+                        alert(
+                            "Pedido guardado correctamente."
+                        );
+
+
+                        document.getElementById(
+                            "nombreCliente"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "direccion"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "platillo"
+                        ).selectedIndex = 0;
+
+
+
+                        if (typeof M !== "undefined") {
+
+
+                            M.FormSelect.init(
+                                document.querySelectorAll(
+                                    "select"
+                                )
+                            );
+
+
+                            M.updateTextFields();
+
+                        }
+
+                    })
+
+
+                    .catch(function (error) {
+
+
+                        console.error(error);
+
+
+                        alert(
+                            "Error al guardar el pedido."
+                        );
+
+                    });
+
+            }
+        );
+
+    }
+
+
+
+    // =====================================
+    // BOTÓN CANCELAR
+    // =====================================
+
+    const cancelar =
+        document.getElementById(
+            "cancelarPedido"
+        );
+
+
+    if (cancelar) {
+
+
+        cancelar.addEventListener(
+            "click",
+            function () {
+
+
+                document.getElementById(
+                    "nombreCliente"
+                ).value = "";
+
+
+                document.getElementById(
+                    "direccion"
+                ).value = "";
+
+
+                document.getElementById(
+                    "platillo"
+                ).selectedIndex = 0;
+
+
+
+                if (typeof M !== "undefined") {
+
+
+                    M.FormSelect.init(
+                        document.querySelectorAll(
+                            "select"
+                        )
+                    );
+
+
+                    M.updateTextFields();
+
+                }
+
+            }
+        );
+
+    }
+
+});
+
 
 
 // =====================================
 // OBTENER UBICACIÓN
 // =====================================
 
-const botonUbicacion =
-    document.getElementById("btnUbicacion");
+function obtenerUbicacion(posicion) {
 
 
-if (botonUbicacion) {
-
-    botonUbicacion.addEventListener(
-        "click",
-        function () {
-
-            if (!navigator.geolocation) {
-
-                alert(
-                    "Tu dispositivo no soporta geolocalización."
-                );
-
-                return;
-
-            }
+    const latitud =
+        posicion.coords.latitude;
 
 
-            navigator.geolocation.getCurrentPosition(
-                ubicacionCorrecta,
-                ubicacionError
-            );
-
-        }
-    );
-
-}
+    const longitud =
+        posicion.coords.longitude;
 
 
-// =====================================
-// GUARDAR PEDIDO
-// =====================================
 
-const guardar =
-    document.getElementById("guardarPedido");
+    if (mapa) {
 
 
-if (guardar) {
+        mapa.setView(
+            [latitud, longitud],
+            17
+        );
 
-    guardar.addEventListener(
-        "click",
-        function () {
-
-
-            const platillo =
-                document.getElementById(
-                    "platillo"
-                ).value;
+    }
 
 
-            const nombre =
-                document.getElementById(
-                    "nombreCliente"
-                ).value.trim();
+
+    if (marcador) {
+
+
+        marcador.setLatLng(
+            [latitud, longitud]
+        );
+
+    }
+
+
+
+    const url =
+        "https://nominatim.openstreetmap.org/reverse" +
+        "?lat=" + latitud +
+        "&lon=" + longitud +
+        "&format=json";
+
+
+
+    fetch(url)
+
+
+        .then(function (respuesta) {
+
+            return respuesta.json();
+
+        })
+
+
+        .then(function (datos) {
 
 
             const direccion =
                 document.getElementById(
                     "direccion"
-                ).value.trim();
-
-
-            if (!platillo) {
-
-                alert(
-                    "Seleccione un platillo."
                 );
 
-                return;
+
+            if (direccion) {
+
+
+                direccion.value =
+                    datos.display_name || "";
+
+
+                if (typeof M !== "undefined") {
+
+                    M.updateTextFields();
+
+                }
 
             }
 
 
-            if (!nombre) {
 
-                alert(
-                    "Escriba el nombre del cliente."
-                );
-
-                return;
-
-            }
+            if (marcador) {
 
 
-            if (!direccion) {
-
-                alert(
-                    "Escriba la dirección."
-                );
-
-                return;
-
-            }
-
-
-            if (typeof db === "undefined") {
-
-                alert(
-                    "La base de datos no está disponible."
-                );
-
-                return;
-
-            }
-
-
-            const pedido = {
-
-                platillo: platillo,
-
-                nombre: nombre,
-
-                direccion: direccion,
-
-                fecha:
-                    firebase.firestore.Timestamp.now()
-
-            };
-
-
-            db.collection("pedidos")
-                .add(pedido)
-
-                .then(function () {
-
-                    alert(
-                        "Pedido guardado correctamente."
-                    );
-
-
-                    document.getElementById(
-                        "nombreCliente"
-                    ).value = "";
-
-
-                    document.getElementById(
-                        "direccion"
-                    ).value = "";
-
-
-                    document.getElementById(
-                        "platillo"
-                    ).selectedIndex = 0;
-
-
-                    if (typeof M !== "undefined") {
-
-                        M.FormSelect.init(
-                            document.querySelectorAll(
-                                "select"
-                            )
-                        );
-
-                        M.updateTextFields();
-
-                    }
-
-                })
-
-                .catch(function (error) {
-
-                    console.error(error);
-
-                    alert(
-                        "Error al guardar el pedido."
-                    );
-
-                });
-
-        }
-    );
-
-}
-
-
-// =====================================
-// CANCELAR
-// =====================================
-
-const cancelar =
-    document.getElementById(
-        "cancelarPedido"
-    );
-
-
-if (cancelar) {
-
-    cancelar.addEventListener(
-        "click",
-        function () {
-
-            document.getElementById(
-                "nombreCliente"
-            ).value = "";
-
-
-            document.getElementById(
-                "direccion"
-            ).value = "";
-
-
-            document.getElementById(
-                "platillo"
-            ).selectedIndex = 0;
-
-
-            if (typeof M !== "undefined") {
-
-                M.FormSelect.init(
-                    document.querySelectorAll(
-                        "select"
+                marcador
+                    .bindPopup(
+                        datos.display_name ||
+                        "Ubicación actual"
                     )
-                );
-
-                M.updateTextFields();
+                    .openPopup();
 
             }
 
-        }
-    );
-
-}
-```
-
-});
-
-// =====================================
-// UBICACIÓN CORRECTA
-// =====================================
-
-function ubicacionCorrecta(posicion) {
-
-```
-const latitud =
-    posicion.coords.latitude;
+        })
 
 
-const longitud =
-    posicion.coords.longitude;
+        .catch(function (error) {
 
 
-if (mapa) {
-
-    mapa.setView(
-        [latitud, longitud],
-        17
-    );
-
-}
+            console.error(error);
 
 
-if (marcador) {
-
-    marcador.setLatLng(
-        [latitud, longitud]
-    );
-
-}
-
-
-const url =
-    "https://nominatim.openstreetmap.org/reverse" +
-    "?lat=" + latitud +
-    "&lon=" + longitud +
-    "&format=json";
-
-
-fetch(url)
-
-    .then(function (respuesta) {
-
-        return respuesta.json();
-
-    })
-
-    .then(function (datos) {
-
-
-        const campo =
-            document.getElementById(
-                "direccion"
+            alert(
+                "No se pudo obtener la dirección."
             );
 
-
-        if (campo) {
-
-            campo.value =
-                datos.display_name || "";
-
-
-            if (typeof M !== "undefined") {
-
-                M.updateTextFields();
-
-            }
-
-        }
-
-
-        if (marcador) {
-
-            marcador
-                .bindPopup(
-                    datos.display_name ||
-                    "Ubicación actual"
-                )
-                .openPopup();
-
-        }
-
-    })
-
-    .catch(function (error) {
-
-        console.error(error);
-
-        alert(
-            "No se pudo obtener la dirección."
-        );
-
-    });
-```
+        });
 
 }
+
+
 
 // =====================================
 // ERROR DE UBICACIÓN
 // =====================================
 
-function ubicacionError(error) {
-
-```
-console.error(error);
+function errorUbicacion(error) {
 
 
-alert(
-    "No se pudo obtener la ubicación.\n\n" +
-    error.message
-);
-```
+    console.error(error);
+
+
+    alert(
+        "No se pudo obtener la ubicación.\n\n" +
+        error.message
+    );
 
 }
