@@ -13,62 +13,13 @@
 
 <title>REATS - Acerca de</title>
 
-
-<!-- MATERIALIZE CSS -->
-
-<link
-    rel="stylesheet"
-    href="../css/materialize.min.css">
-
-
-<!-- ICONOS -->
+<link rel="stylesheet" href="../css/materialize.min.css">
 
 <link
     href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet">
 
-
-<!-- ESTILOS -->
-
-<link
-    rel="stylesheet"
-    href="../css/styles.css">
-
-
-<style>
-
-    .about-container {
-
-        margin-top: 40px;
-        margin-bottom: 40px;
-
-    }
-
-
-    .about-card {
-
-        padding: 30px;
-        border-radius: 12px;
-
-    }
-
-
-    .logo {
-
-        font-size: 35px;
-        font-weight: bold;
-        margin-bottom: 20px;
-
-    }
-
-
-    .material-icons.large {
-
-        font-size: 70px;
-
-    }
-
-</style>
+<link rel="stylesheet" href="../css/styles.css">
 ```
 
 </head>
@@ -76,21 +27,13 @@
 <body>
 
 ```
-<!-- =====================================
-     BARRA SUPERIOR
-====================================== -->
-
 <nav class="z-depth-0">
 
     <div class="nav-wrapper container">
 
-
         <a href="../index.html">
-
             REATS
-
         </a>
-
 
         <span class="right grey-text text-darken-1">
 
@@ -104,28 +47,19 @@
 
         </span>
 
-
     </div>
 
 </nav>
 
 
-
-<!-- =====================================
-     MENÚ LATERAL
-====================================== -->
-
 <ul
     id="side-menu"
     class="sidenav side-menu">
 
-
     <li>
 
         <a class="subheader">
-
             REATS
-
         </a>
 
     </li>
@@ -138,9 +72,7 @@
             class="waves-effect">
 
             <i class="material-icons left">
-
                 home
-
             </i>
 
             Inicio
@@ -157,9 +89,7 @@
             class="waves-effect">
 
             <i class="material-icons left">
-
                 receipt
-
             </i>
 
             Pedidos
@@ -176,9 +106,7 @@
             class="waves-effect">
 
             <i class="material-icons left">
-
                 info
-
             </i>
 
             Acerca de
@@ -202,9 +130,7 @@
             class="waves-effect">
 
             <i class="material-icons left">
-
                 mail_outline
-
             </i>
 
             Contacto
@@ -213,130 +139,96 @@
 
     </li>
 
-
 </ul>
 
 
+<main class="container section">
 
-<!-- =====================================
-     CONTENIDO
-====================================== -->
+    <div class="card">
 
-<main class="container section about-container">
+        <div class="card-content">
 
+            <div class="center">
 
-    <div class="card about-card">
+                <i
+                    class="material-icons"
+                    style="font-size:70px;">
 
+                    restaurant
 
-        <div class="center">
+                </i>
 
+                <h4>
+                    REATS
+                </h4>
 
-            <i class="material-icons large">
-
-                restaurant
-
-            </i>
-
-
-            <div class="logo">
-
-                REATS
+                <h5>
+                    Acerca de REATS
+                </h5>
 
             </div>
 
 
-            <h5>
+            <div class="divider"></div>
 
-                Acerca de REATS
-
-            </h5>
+            <br>
 
 
-        </div>
+            <p>
+
+                REATS es una aplicación web diseñada
+                para consultar platillos y registrar
+                pedidos.
+
+            </p>
 
 
+            <p>
 
-        <div class="divider"></div>
+                La aplicación permite seleccionar
+                platillos, registrar los datos del
+                cliente y obtener su ubicación mediante
+                un mapa.
 
-
-        <br>
-
-
-        <p>
-
-            REATS es una aplicación web diseñada para
-            consultar platillos, registrar pedidos y
-            facilitar la administración de información
-            relacionada con los clientes.
-
-        </p>
+            </p>
 
 
-        <p>
+            <p>
 
-            La aplicación permite seleccionar un platillo,
-            registrar los datos del cliente y obtener su
-            ubicación mediante un mapa.
+                REATS fue desarrollada como un proyecto
+                académico utilizando tecnologías web.
 
-        </p>
-
-
-        <p>
-
-            REATS fue desarrollada como un proyecto
-            académico utilizando tecnologías web
-            modernas.
-
-        </p>
+            </p>
 
 
-
-        <br>
-
-
-        <div class="center">
+            <br>
 
 
-            <a
-                href="../index.html"
-                class="btn waves-effect waves-light">
+            <div class="center">
 
+                <a
+                    href="../index.html"
+                    class="btn waves-effect waves-light">
 
-                <i class="material-icons left">
+                    <i class="material-icons left">
+                        home
+                    </i>
 
-                    home
+                    Regresar al inicio
 
-                </i>
+                </a>
 
-
-                Regresar al inicio
-
-
-            </a>
-
+            </div>
 
         </div>
-
 
     </div>
-
 
 </main>
 
 
+<script src="../js/materialize.min.js"></script>
 
-<!-- =====================================
-     MATERIALIZE JS
-====================================== -->
-
-<script
-    src="../js/materialize.min.js">
-</script>
-
-
-<!-- =====================================
-     INICIALIZAR MENÚ
-====================================== -->
 
 <script>
 
@@ -347,11 +239,8 @@
             const menu =
                 document.querySelectorAll(".sidenav");
 
-
             M.Sidenav.init(menu, {
-
                 edge: "right"
-
             });
 
         }
